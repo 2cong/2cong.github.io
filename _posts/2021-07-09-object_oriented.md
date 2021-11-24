@@ -7,7 +7,9 @@ aside:
 ---
 
 
-[프로그래밍 응용: 객체지향](http://www.kocw.net/home/cview.do?cid=42e5d809846bebec)을 보고 정리
+[프로그래밍 응용: 객체지향](http://www.kocw.net/home/cview.do?cid=42e5d809846bebec)을 보고 정리한 내용
+
+<!--more-->
 
 ---
 
