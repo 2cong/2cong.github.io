@@ -20,7 +20,7 @@ text_skin: default # "default" (default), "dark", "forest", "ocean", "chocolate"
 highlight_theme: default # "default" (default), "tomorrow", "tomorrow-night", "tomorrow-night-eighties", "tomorrow-night-blue", "tomorrow-night-bright"
 url     : https://2cong.github.io/ # the base hostname & protocol for your site e.g. https://www.someone.com
 baseurl : # does not include hostname
-title   : Your Site Title
+title   : Studylog
 description: > # this means to ignore newlines until "Language & timezone"
   Your Site Description
 
@@ -38,7 +38,7 @@ author:
   name      : 2cong
   url       :
   avatar    : /assets/images/profile.png # path or url of avatar image (square)
-  bio       : test
+  bio       : Developer
   email     : cjina3710@gmail.com
   facebook  : # "user_name" the last part of your profile url, e.g. https://www.facebook.com/user_name
   twitter   : # "user_name" the last part of your profile url, e.g. https://twitter.com/user_name
@@ -202,6 +202,7 @@ exclude:
   - /vendor
 
 defaults:
+  ## posts
   - scope:
       path: ""
       type: posts
@@ -214,7 +215,6 @@ defaults:
       show_edit_on_github: true
       show_subscribe: true
       pageview: true
-
 
 ## => Plugins
 ##############################
