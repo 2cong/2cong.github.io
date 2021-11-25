@@ -3,6 +3,7 @@ layout: base
 ---
 {%- assign _page_mode = page.mode | default: layout.mode | default: site.data.variables.default.page.mode -%}
 {%- assign _page_type = page.type | default: layout.type | default: site.data.variables.default.page.type -%}
+{%- assign _page_key = page.key | default: layout.key | default: site.data.variables.default.page.key -%}
 {%- assign _article_header_type = page.article_header.type | default: layout.article_header.type -%}
 
 {%- include snippets/assign.html
@@ -211,7 +212,11 @@ layout: base
 
                     <div class="js-article-content">{{ content }}</div>
                     {%- if _comment != false -%}
-                      <section class="page__comments d-print-none">{%- include comments.html -%}</section>
+                      {%- if _page_type == 'article' -%}
+                        {%-if _page_key == false -%}
+                          <section class="page__comments d-print-none">{%- include comments.html -%}</section>
+                        {%- endif -%}
+                      {%- endif -%}
                     {%- endif -%}
                 </article>
                 {%- include main/bottom/custom.html -%}
