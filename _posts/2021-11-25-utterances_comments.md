@@ -13,9 +13,9 @@ aside:
 
 ---
 
-## utterances
+## utterances 🔮
 
-[utterances](https://utteranc.es)는 GitHub issue를 기반으로 하는 댓글 시스템이다. 블로그에서 댓글을 달면 repo의 이슈에 댓글이 달린다 🤓 <br>
+[utterances](https://utteranc.es)는 GitHub issue를 기반으로 하는 댓글 시스템이다. 블로그에서 댓글을 달면 repo의 이슈에 댓글이 달린다 😎<br>
 utterances는 광고도 없고 무료이며 연동도 쉽다!
 
 utterances 사이트에 나온 것처럼 [utterances app](https://github.com/apps/utterances)을 설치하고 utterances를 설정만 하면 된다.
@@ -36,19 +36,25 @@ utterances 사이트에 나온 것처럼 [utterances app](https://github.com/app
 ```
 <br>
 <br>
-아래에 링크를 걸어둔 블로그를 참고하면 더 자세한 설명을 볼 수 있다 🙇🏻‍♀️ 
+아래에 링크를 걸어둔 블로그를 참고하면 더 자세한 설명을 볼 수 있다.
 
-utterances를 설정할 때 참고하면 좋은 블로그 : [Jekyll 블로그에 utterances로 댓글 기능 추가하기](https://madplay.github.io/post/jekyll-blog-comments-with-utterances)
+⭐️ utterances를 설정할 때 참고하면 좋은 블로그 : [Jekyll 블로그에 utterances로 댓글 기능 추가하기](https://madplay.github.io/post/jekyll-blog-comments-with-utterances)
 
 ---
 
-## TeXt Theme에 utterances 적용하기
+## TeXt Theme에 utterances 적용하기 💪
 
 
-위에서 얻은 script를 jekyll TeXt Theme에 적용해보자! 💪
+위에서 얻은 script를 jekyll TeXt Theme에 적용해보자! 
 
+제일 간단한 방법은 comment 기능을 넣고 싶은 위치에 해당 스크립트를 붙여넣는 것이다. <br>
+이 방법을 사용하면 댓글을 무척 간단하게 적용할 수 있지만, 매 글마다 스크립트를 붙여주어야한다는 치명적인 단점이 있다..! 🤨
 
-댓글을 적용하려면 몇 가지 세팅이 필요하다. 
+스크립트를 매번 붙여넣기 하지 않고 댓글을 적용하기 위해서는 몇 가지 세팅이 필요하다.
+<br>
+<br>
+
+### 세팅하기 🤓
 
 #### 1. _config.yml 파일 수정하기
 
@@ -78,16 +84,19 @@ TeXt Theme의 화면들은 ```_layouts/page.html```을 바탕으로 구현된다
 
 <br>
 provider를 custom으로 설정해두었으므로 ```comments.html```은  ```_includes/comments-providers/custom.html```에 있는 내용을 사용한다.
-결과적으로 `custom.html`에 위에서 얻은 script 내용을 붙여넣기 하면 댓글을 사용할 수 있다!
+결과적으로 `custom.html`에 위에서 얻은 script 내용을 붙여넣기 하면 매 글마다 script를 추가 하지 않아도 해당 내용이 적용된다.
 
 
 #### 3. push해서 확인하기
 
+원하는 페이지에 script를 붙여넣기를 했을 때에는 로컬 서버에서도 comment가 추가된 화면을 확인할 수 있다. <br>
+그러나 위의 방법으로 세팅한 후 로컬 서버로 확인하면 아무런 변화가 없다..😳!
+
+git push를 하고 github 블로그 주소로 들어가면 comment 창이 생긴 것을 확인할 수 있다!
 
 
+<br>
 
+### Blog Post에만 댓글 창 보이게 하기 
 
-
-
-
-
+위의 과정을 거치고 나니 댓글 창이 생겼으나..
