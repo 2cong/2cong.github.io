@@ -212,11 +212,7 @@ layout: base
 
                     <div class="js-article-content">{{ content }}</div>
                     {%- if _comment != false -%}
-                      {%- if _page_type == 'article' -%}
-                        {%-if _page_key == false -%}
-                          <section class="page__comments d-print-none">{%- include comments.html -%}</section>
-                        {%- endif -%}
-                      {%- endif -%}
+                      <section class="page__comments d-print-none">{%- include comments.html -%}</section>
                     {%- endif -%}
                 </article>
                 {%- include main/bottom/custom.html -%}
