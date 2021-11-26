@@ -92,11 +92,17 @@ provider를 custom으로 설정해두었으므로 ```comments.html```은  ```_in
 원하는 페이지에 script를 붙여넣기를 했을 때에는 로컬 서버에서도 comment가 추가된 화면을 확인할 수 있다. <br>
 그러나 위의 방법으로 세팅한 후 로컬 서버로 확인하면 아무런 변화가 없다..😳!
 
-git push를 하고 github 블로그 주소로 들어가면 comment 창이 생긴 것을 확인할 수 있다!
+git push를 하고 github 블로그 주소로 들어가면 comment 창이 생긴 것을 확인할 수 있다.
 
+![image](https://user-images.githubusercontent.com/60612551/143528240-e17fbf51-453b-4cca-93c4-6aa0579911fd.png)
+
+댓글을 달면 이렇게 Issues에 등록된다! 나는 issue-term을 **title**로 지정했기에 내 블로그 포스트 제목으로 Issue가 등록되었다 😆
+
+![image](https://user-images.githubusercontent.com/60612551/143528414-7a9447f6-b95d-4b85-95ff-9b8a983228f2.png)
 
 <br>
 
 ### Blog Post에만 댓글 창 보이게 하기 
 
 위의 과정을 거치고 나니 댓글 창이 생겼으나..
+
