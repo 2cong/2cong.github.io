@@ -18,7 +18,6 @@ default:
   page:
     mode: normal
     type: webpage
-    key: false
     article_header:
       align: left
       theme: light
@@ -35,7 +34,7 @@ default:
     show_subscribe: false
     full_width: false
     sharing: false
-    comment: true
+    comment: false
     license: false
     pageview: false
     search: default

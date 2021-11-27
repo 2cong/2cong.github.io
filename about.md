@@ -23,6 +23,7 @@ titles:
   fr-FR   : *FR
   fr-LU   : *FR
   # @end locale config
-key: page-about
+comment: false
+# key: page-about
 
 ---
