@@ -11,7 +11,7 @@ aside:
 <!--more-->
 
 ---
-# Chapter 05-01
+# Chapter 05 - 01
 
 ## 일급 함수(first-class)
 
@@ -35,7 +35,7 @@ aside:
 
 - python의 철학
   
-    - 모든 것은 객체(object)이다
+    - **모든 것은 객체(object)이다**
       
     - 함수 역시 object
 
@@ -113,8 +113,10 @@ var_func = factorial
 [1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800]
 ```
 
-### 다른 함수에서 함수를 인자로 전달 가능
+### 함수를 인자로 전달 가능
 
+- 다른 함수에서 함수를 인자로 전달 가능
+  
 - 고위 함수 (HOF : Higher-Order Function )
   
     - 함수를 인수로 받거나, 함수를 결과로 반환하는 함수
@@ -233,26 +235,31 @@ def test_function(param, param2='second', *args, **kwargs):
     print('test')
     return None
 
+
 from inspect import signature
 
+
 sg = signature(test_function)
+
 
 >>> sg
 <Signature (param, param2='second', *args, **kwargs)>
 
+
 >>> sg.parameters
 mappingproxy(OrderedDict([('param', <Parameter "param">), ('param2', <Parameter "param2='second'">), 
-('args', <Parameter "*args">), ('kwargs', <Parameter "**kwargs">)]))
+                          ('args', <Parameter "*args">), ('kwargs', <Parameter "**kwargs">)]))
+
 
 # 아래와 같이 parameter의 name, default value, kind 등을 알 수 있음
 >>> for param in sg.parameters.values():
-	    print(param.name)
-	    print(param.default)
-	    print(param.kind)
-	    print('---')
-    
+    print(param.name)
+    print(param.default)
+    print(param.kind)
+    print('---')
+      
 param
-<class 'inspect._empty'>
+`<class 'inspect._empty'>`
 POSITIONAL_OR_KEYWORD
 ---
 param2
@@ -260,11 +267,11 @@ second
 POSITIONAL_OR_KEYWORD
 ---
 args
-<class 'inspect._empty'>
+`<class 'inspect._empty'>`
 VAR_POSITIONAL
 ---
 kwargs
-<class 'inspect._empty'>
+`<class 'inspect._empty'>`
 VAR_KEYWORD
 ---
 ```
@@ -273,7 +280,7 @@ VAR_KEYWORD
 
 - partial object를 return
     - partial object → func 처럼 동작함
-    - 첫번째 인자로 받은 **함수**에 **나머지 인자를 고정**하여 partial object 생성
+    - 첫번째 인자로 받은 <span style="color:#DD2525">**함수**</span>에 <span style="color:#0067a3">**나머지 인자를 고정**</span>하여 partial object 생성
 
 ```python
 # partial(func, /, *args, **keywords) -> return partial object
@@ -283,8 +290,10 @@ VAR_KEYWORD
 from operator import mul
 from functools import partial
 
+
 >>> mul(10,10)
 100
+
 
 # 함수 인수로 전달 가능 -> 일급 객체이므로
 # mul에는 2개의 값이 들어가야하는데 하나만 변수화해서 partial object로 생성함
@@ -293,8 +302,10 @@ five = partial(mul, 5)
 >>> five
 functools.partial(<built-in function mul>, 5)
 
+
 >>> five(10)
 50
+
 
 # 고정 인자 추가
 six = partial(five, 6)
@@ -305,11 +316,13 @@ functools.partial(<built-in function mul>, 5, 6)
 >>> six()
 30
 
+
 # 받아야하는 인자만큼 고정하면 변수처럼 사용가능
 thirty = partial(mul, 6, 5)
 
 >>> thirty()
 30
+
 
 # 아래와 같이 사용할 수 있음
 >>> [five(i) for i in range(1,11)]
@@ -329,17 +342,17 @@ thirty = partial(mul, 6, 5)
 def callback(n):
     print("Sum = {}".format(n))
 
+    
 def main(a, b, _callback = None):
     print("adding {} + {}".format(a, b))
     if _callback:
         _callback(a+b)
 
+        
 >>> main(1, 2, callback)
 adding 1 + 2
 Sum = 3
 ```
-
-ref) [stack overflow : how-to-write-a-simple-callback-function](https://stackoverflow.com/questions/40843039/how-to-write-a-simple-callback-function/40843238)
 
 ### lambda vs partial
 
@@ -351,14 +364,16 @@ from functools import partial
 funcs = []
 
 >>> for i in range(5):
-	    funcs.append(partial(print, i))
+    funcs.append(partial(print, i))
 
+    
 >>> funcs
 [functools.partial(<built-in function print>, 0), functools.partial(<built-in function print>, 1), functools.partial(<built-in function print>, 2),
  functools.partial(<built-in function print>, 3), functools.partial(<built-in function print>, 4)]
 
+
 >>> for f in funcs:
-	    f()
+    f()
 
 0
 1
@@ -375,14 +390,16 @@ funcs = []
 funcs = []
 
 >>> for i in range(5):
-	    funcs.append(lambda : print(i))
+    funcs.append(lambda : print(i))
 
+    
 >>> funcs
 [<function <lambda> at 0x7fc0dc10a670>, <function <lambda> at 0x7fc0dc10a5e0>, <function <lambda> at 0x7fc0dc10a700>,
  <function <lambda> at 0x7fc0dc10a790>, <function <lambda> at 0x7fc0dc10a8b0>]
 
+  
 >>> for f in funcs:
-	    f()
+    f()
 4
 4
 4
@@ -410,24 +427,33 @@ funcs = []
     - partial은 생성될 때 인자를 받음
 
 - lambda
+  
     - same type as a standard function
+      
     - instance method 처럼 행동하게 됨
-
+<br>
+      
 - partial
+  
     - 인자가 있는 func 처럼 동작하는 partial object를 return
 
-ref) [https://wikidocs.net/13973](https://wikidocs.net/13973)
+---
 
-# Chapter 05-02
+# Chapter 05 - 02
 
 ## python variable scope
 
-![ref) [https://www.datacamp.com/community/tutorials/scope-of-variables-python](https://www.datacamp.com/community/tutorials/scope-of-variables-python)](5%20%E1%84%91%E1%85%A1%E1%84%8B%E1%85%B5%E1%84%8A%E1%85%A5%E1%86%AB%20%E1%84%8B%E1%85%B5%E1%86%AF%E1%84%80%E1%85%B3%E1%86%B8%20%E1%84%92%E1%85%A1%E1%86%B7%E1%84%89%E1%85%AE%20dcb43d608e0045a9a25947cef9a0d5c7/Untitled.png)
+![image](https://user-images.githubusercontent.com/60612551/144049348-75ed890a-9052-4fcb-a0cc-4bcc5837cf53.png)
 
-ref) [https://www.datacamp.com/community/tutorials/scope-of-variables-python](https://www.datacamp.com/community/tutorials/scope-of-variables-python)
-
-## variable scope
-
+<br>
+- LEGB Rule
+  
+  - Python에서 변수에 값을 바인딩하거나 변수의 값을 참조하는 경우 **L, E, G, B** 순으로 탐색
+    <br><br>
+    
+    ![image](https://user-images.githubusercontent.com/60612551/144050685-4b4601f7-836b-4796-9bdb-e31ce827709d.png)
+    <br>
+    
 - 변수가 선언된 위치에 따라 해당 변수가 영향을 미치는 범위가 달라짐
 
 ```python
@@ -438,8 +464,15 @@ def func_v1(a):
     print(a)
     print(b)
 
-# 예외
-# func_v1(10)
+
+# 'b'가 정의 되어 있지 않아서 에러 발생
+>>> func_v1(10)
+Traceback (most recent call last):
+  File "<input>", line 1, in <module>
+  File "<input>", line 3, in func_v1
+NameError: name 'b' is not defined
+
+
 
 # Ex2
 b = 20
@@ -448,159 +481,468 @@ def func_v2(a):
     print(a)
     print(b)
 
-func_v2(10)
 
-# Ex3
+# local scope에 정의된 b가 없기 때문에 global scope에 정의된 b 사용함
+>>> func_v2(10)
+10
+20
 
+
+
+# Ex3-1
 c = 30
 
-def func_v3(a):
+def func_v3_1(a):
+    print(a)
+    print(c)
+    c = 40
+
+    
+>>> c
+30
+    
+
+# 에러 발생
+>>> func_v3_1(10)
+Traceback (most recent call last):
+  File "<input>", line 1, in <module>
+  File "<input>", line 5, in func_v3
+UnboundLocalError: local variable 'c' referenced before assignment
+
+# local scope에 c가 정의되어 있으므로 global 변수가 아닌 local 변수를 사용하려고 함
+# local 변수 c가 할당 전에 참조돼서 에러 발생
+
+
+# Ex3-2
+c = 30
+
+def func_v3_2(a):
     global c
     print(a)
     print(c)
     c = 40
-# 참조전에 할당돼서
-# 안에 같은 이름이 있어서 local 변수를 사용하려고 함 -> local이 참조 전에 할당돼서 에러
-# 함수 내에서 global 써서 변수 변경하는 거 좋은 방법은 아님
 
-print('>>',c)
-func_v3(10)
-print('>>>',c)
+# global 키워드 이용하여 local scope의 변수 c를 global 변수로 변경 
+# 함수 내에서 global 사용하여 변수 변경하는 것이 좋은 방법은 아님 → 코드에 혼란을 줄 수 있음
 
-from dis import dis
+>>> c
+30
 
-print()
-print(dis(func_v3))
 
-print()
-print()
+>>> func_v3_2(10)
+10
+30
 
-# Closure(클로저) 사용 이유
-# 클로저 ! remember! -> scope가 닫혀도 함수 끝나도 값 기억
 
-# 서버 프로그래밍 -> 동시성(Concurrency)제어 -> 메모리 공간에 여러 자원이 접근 -> 교착상태(Dead Lock)
-# 메모리를 공유하지 않고 메시지 전달로 처리하기 위한 -> Erlang
-# 클로저는 공유하되 변경되지 않는(Immutable, Read Only) 구조 적극적으로 사용 -> 함수형 프로그래밍
-# 클로저는 불변자료구조 및 atom(원자성), STM -> 멀티스레드(Coroutine -> 단일 스레드에서 병행성 처리) 프로그래밍에 강점
-# 클로저 -> 불변 상태 기억!!! 이 포인트
+# 함수 실행 이후 global 변수 c의 값이 변경됨
+>>> c
+40
 
-a = 100
-
-# 누적되지 않음
-print(a + 100)
-print(a + 1000)
-# 누적하려면 재할당의 과정을 거쳐야함..!
-
-# 결과 누적(함수 사용)
-print(sum(range(1,51)))
-print(sum(range(51,101)))
-
-print()
-print()
-
-# 클래스 이용
-# 평균 누적해서 구해주는 class
-class Averager():
-    def __init__(self):
-        self._series = []
-
-		# 함수처럼 사용 가능하게 하는 매직 메소드
-    def __call__(self, v):
-        self._series.append(v)
-        print('inner >>> {} / {}'.format(self._series, len(self._series)))
-        return sum(self._series) / len(self._series)
-
-# 인스턴스 생성
-averager_cls = Averager()
-
-# 누적
-# 아래의 예시는 class 인스턴스인데 함수처럼 실행함
-# 값의 상태를 계속 가지고 있음 (class에 정의된 series가 저장해줌)
-
-print(averager_cls(15))
-print(averager_cls(35))
-print(averager_cls(40))
-
-# 핵심은 해당 영역에 상태를 기억하고 있다
-# 그렇기 때문에 중단값을 기억하고 나중에 다시 그 시점부터 일을 시작할 수 있음
 ```
 
-## 클로저
+### nonlocal
 
-- 파이썬 변수 범위
-- global 선언
-- 클로저 사용 이유
-- class → closure 구현 (class를 이용하여 scope의 상태를 기억하는 것을 구현해봄)
+- enclosed scope의 변수
+- outer 함수 안에 있으며 동시에 inner 함수 밖에 있는 영역
+- outer 함수 밖의 영역은 global scope
+
+```python
+
+# Ex1
+# global 변수
+a = 1
+b = 100
+
+def outer_func():
+  # enclosed scope 
+  # nonlocal 변수
+  # inner_func 입장에서 nonlocal, outer_func 입장에서는 local
+  b = 2
+  
+  def inner_func():
+    # local 변수
+    c = 3
+    print(b)
+    print(c) 
+    
+  return inner_func()
+
+
+# nonlocal scope에 있는 b 호출
+>>> outer_func()
+2
+3
+
+
+# Ex2-1
+def outer_func():
+  b = 2
+  
+  def inner_func():
+    c = 3
+    print(b)
+    b = 5 
+    
+  return inner_func()
+
+
+# 에러 발생
+>>> outer_func()
+Traceback (most recent call last):
+  File "<input>", line 1, in <module>
+  File "<input>", line 9, in outer_func
+  File "<input>", line 6, in inner_func
+UnboundLocalError: local variable 'b' referenced before assignment
+
+# local scope에 b가 정의되어 있으므로 nonlocal 변수가 아닌 local 변수를 사용하려고 함
+# local 변수 b가 할당 전에 참조돼서 에러 발생
+
+
+# Ex2-2
+def outer_func():
+    b = 2
+    def inner_func():
+        nonlocal b
+        c = 3
+        print(b)
+        b = 5
+        print(b)
+    
+    return inner_func()
+
+
+# nonlocal keyword를 사용하여 local scope의 변수 b를 nonlocal 변수로 변경
+>>> outer_func()
+2
+5
+
+```
+
+### 누적하여 계산하기
+
+- 일반적인 계산
+
+  ```python
+  
+  a = 100
+  
+  
+  # 계산을 반복해도 계산이 누적되지 않음
+  >>> a + 100
+  200
+  
+  
+  >>> a + 1000
+  1100
+  
+  
+  # 계산을 누적하려면 재할당의 과정을 거쳐야함!
+  
+  a = a + 100
+  a = a + 1000
+  
+  
+  >>> a
+  1200
+  ```
+
+- 함수를 사용하여 결과 누적
+
+  ```python
+  # 함수를 사용하여 결과 누적
+  >>> sum(range(1,51))
+  1275
+  ```
+
+- class를 사용하여 결과 누적
+  
+  ```python
+  
+  # 평균 누적해서 구해주는 class
+  class Averager():
+      def __init__(self):
+          self._series = []
+  
+      # 함수처럼 사용 가능하게 하는 매직 메소드
+      def __call__(self, v):
+          self._series.append(v)
+          print('inner : {} / {}'.format(self._series, len(self._series)))
+          return sum(self._series) / len(self._series)
+  
+  
+  # 인스턴스 생성
+  averager_cls = Averager()
+  
+  # 누적하여 계산할 수 있음
+  # 아래의 예시는 class 인스턴스인데 함수처럼 실행함 (__call__이 정의되어 있기에 가능)
+  # 값의 상태를 계속 가지고 있음 (class에 정의된 series가 값의 상태를 저장해줌)
+  
+  >>> averager_cls(15)
+  inner : [15] / 1
+  15.0
+  
+  
+  >>> averager_cls(35)
+  inner : [15, 35] / 2
+  25.0
+  
+  
+  >>> averager_cls(40)
+  inner : [15, 35, 40] / 3
+  30.0
+  
+  # 해당 영역의 상태를 기억하고 있음 → 중단값 기억가능 → 나중에 해당 시점부터 일을 다시 시작할 수 있음  
+  ```
+
+--- 
 
 # Chapter 05-03
 
-## 클로저 심화
+## Closure (클로저)
+- **first-class functions**의 개념을 이용
 
-- 클로저 사용
+- 자신을 둘러싼 scope의 **<span style="color:#DD2525">상태값을 기억</span>**하는 함수
+  
+  - 함수의 실행이 종료되면 함수 내에 정의되었던 local 변수들은 소멸됨
+  
+  - closure는 자신이 정의된 scope(nonlocal scope)에 있는 변수를 참조함
+  
+  - **closure는 nonlocal 영역의 변수를 사용하기에 함수의 실행이 종료되어도 상태값을 기억함**
+  
+  - 값을 기억하고 있기 때문에 함수가 끝났어도 다음 시점부터 일 할 수 있음
 
+- 중첩 함수(inner func)가 상위 함수(outer func)의 변수를 가두어 사용
+  
+  - 중첩 함수가 상위 함수 scope인 nonlocal scope에 접근하여 사용
+
+### closure 함수가 되기 위한 조건
+- 해당 함수는 어떤 함수 내의 <span style="color:#0067a3">**중첩된 함수**</span>여야 함
+- 해당 함수는 자신을 둘러싼(enclose) 함수 내의 <span style="color:#0067a3">**상태값을 반드시 참조**</span>해야 함
+- 해당 함수를 둘러싼 함수는 이 함수를 <span style="color:#0067a3">**return**</span>해야 함
+
+
+### 클로저 사용 예시
 ```python
-# 파이썬 심화
-# 클로저 : 외부에서 호출된 함수의 변수값, 상태 (레퍼런스) 복사 후 저장(스냅샷) -> 후에 접근(엑세스) 가능
+# class는 자신의 상태를 기억함
+# closure를 이용하여 class와 같이 자신의 상태를 기억하는 함수를 구현할 수 있음
+
 
 # 클로저(Closure) 사용
 def closure_ex1():
-    # Free variable (자유 변수)
-		# 클로저 영역
+	# 클로저 영역
     series = []
+    
     def averager(v):
-        # series = [] # 주석 해제 후 확인
         series.append(v)
-        print('inner >>> {} / {}'.format(series, len(series)))
+        print('inner : {} / {}'.format(series, len(series)))
         return sum(series) / len(series)
     
+    # 함수를 리턴(함수를 결과로 반환 가능)
     return averager
-		# 함수를 리턴(함수를 결과로 반환 가능)
+
+
 
 avg_closure1 = closure_ex1()
 
-print(avg_closure1)
-print(avg_closure1(15))
-print(avg_closure1(35))
-print(avg_closure1(40))
-# series -> 값을 보존하는 역할 (누적해서 보존..)
 
-print()
-print()
+>>> avg_closure1
+<function closure_ex1.<locals>.averager at 0x7fbc4d1a44c0>
 
-# function inspection
 
-print(dir(avg_closure1))
-print()
-print(dir(avg_closure1.__code__))
-print()
-print(avg_closure1.__code__.co_freevars)
-print()
-print(dir(avg_closure1.__closure__[0]))
-print()
-print(avg_closure1.__closure__[0].cell_contents)
+>>> avg_closure1(15)
+inner : [15] / 1
+15.0
 
-print()
-print()
 
-# 잘못된 클로저 사용
+>>> avg_closure1(35)
+inner : [15, 35] / 2
+25.0
+
+
+>>> avg_closure1(40)
+inner : [15, 35, 40] / 3
+30.0
+# series -> 값을 보존하는 역할 (누적하며 보존함)
+```
+
+#### Free Variable
+
+- free variable (자유변수) 
+  - Definition of a free variable: Used, but neither global nor bound
+  - enclosed scope의 변수
+  
+- free variable 저장 위치
+
+```python
+
+def outer():
+    # 클로저 영역
+    test_var = []
+    test_var2 = 4
+    test_var3 = 5
+    
+    def inner(v):
+        nonlocal test_var2
+        test_var.append(v)
+        # local 변수
+        test_var4 = 6
+        
+        return None
+    
+    return inner
+
+
+closure = outer()
+
+closure(100)
+
+closure(1000)
+
+
+>>> dir(closure)
+['__annotations__', '__call__', '__class__', '__closure__', '__code__',
+ ...,
+'__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__']
+
+
+
+# ✅ 1. free variable의 저장위치를 확인하기 위해 위의 attribute 중 code를 확인
+#  __code__ attribute를 확인하면 아래와 같음
+>>> dir(closure.__code__)
+['__class__', '__delattr__', '__dir__', '__doc__', '__eq__', 
+ '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__',
+ ...,
+ 'co_argcount', 'co_cellvars', 'co_code', 'co_consts', 'co_filename',
+ 'co_firstlineno', 'co_flags', 'co_freevars', 'co_kwonlyargcount',
+ 'co_lnotab', 'co_name', 'co_names', 'co_nlocals', 'co_posonlyargcount',
+ 'co_stacksize', 'co_varnames', 'replace']
+
+
+
+# ⭐️ co_freevars : inner 함수에서 사용하는 자유 변수를 tuple로 return
+# test_var3는 inner 함수에서 사용하지 않았기 때문에 return되지 않음
+>>> closure.__code__.co_freevars
+('test_var', 'test_var2')
+
+
+# ⭐️ co_cellvars: outer 함수에서 정의한 변수 중 inner 함수에서 사용되는 변수를 tuple로 return
+# outer 함수에서 사용!
+>>> outer.__code__.co_cellvars
+('test_var', 'test_var2')
+
+
+# ⭐️ co_nolocals : 함수에서 사용되는 local 변수의 개수 return (arguments의 개수 포함)
+# 여기서는 test_var4 와 argument v로 2개가 return 됨
+>>> closure.__code__.co_nlocals
+2
+
+
+
+
+# ✅ 2. free variable의 저장위치를 확인하기 위해 위의 attribute 중 closure를 확인
+# closure 속성을 조회하면 아래와 같이 tuple에 cell이 담겨있음
+>>> closure.__closure__
+(<cell at 0x7fbc4d1a5b50: list object at 0x7fbc4d1bb400>,
+ <cell at 0x7fbc4d1a54c0: int object at 0x108c97af0>)
+
+
+# 아래와 같이 index를 통해 cell에 접근 가능
+>>> closure.__closure__[0]
+<cell at 0x7fbc4d1a5b50: list object at 0x7fbc4d1bb400>
+
+
+# cell의 속성들을 확인하면 아래와 같은 속성들이 나타남 
+>>> dir(closure.__closure__[0])
+['__class__', '__delattr__', '__dir__', '__doc__', '__eq__',
+ ...,
+ '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'cell_contents']
+
+
+
+# 위에서 조회한 속성 중 cell_contents를 이용하여 free variable 확인 가능
+
+# ⭐️ 첫번째 cell_contents로 test_var에 정의된 내용을 확인할 수 있음!
+# 위에서 100, 1000을 test_var에 append 했기에 append한 내용이 담겨서 나타 
+>>> closure.__closure__[0].cell_contents
+[100, 1000]
+
+
+# ⭐️ 두번째 cell_contents로 test_var2에 정의된 내용을 확인할 수 있음!
+>>> closure.__closure__[1].cell_contents
+4
+
+
+```
+
+### 잘못된 클로저 사용 예시
+
+```python
+
+# Ex1
+def closure_ex1():
+	# 클로저 영역
+    series = []
+    
+    def averager(v):
+        series = [] 
+        series.append(v)
+        print('inner : {} / {}'.format(series, len(series)))
+        return sum(series) / len(series)
+    
+    return averager
+
+
+closure_1 =  closure_ex1()
+
+
+>>> closure_1(10)
+inner : [10] / 1
+10.0
+
+
+>>> closure_1(15)
+inner : [15] / 1
+15.0
+
+
+>>> closure_1(35)
+inner : [35] / 1
+35.0
+
+
+# closure_1은 위의 예시에서 정의된 avg_closure1과는 다르게 동작함
+# inner function 안에 series를 정의함 → LEGB rule에 따라 local 영역에 정의된 series를 사용하게 됨
+# local에 정의된 변수는 해당 함수가 종료되면 소멸되기 때문에 값이 누적되지 않게됨
+
+
+
+# Ex2
 def closure_ex2():
     # Free variable
     cnt = 0
     total = 0
 
     def averager(v):
-        cnt += 1 # cnt = cnt + 1
+        cnt += 1 
         total += v
         return total / cnt
     
     return averager
 
+
 avg_closure2 = closure_ex2()
 
-# print(avg_closure2(15)) # 예외
 
-# Nonlocal -> Free variable
-def closure_ex3():
+# 에러 발생
+>>> avg_closure2(15)
+Traceback (most recent call last):
+  File "<input>", line 1, in <module>
+  File "<input>", line 7, in averager
+UnboundLocalError: local variable 'cnt' referenced before assignment
+
+
+# 위와 같은 에러가 발생하지 않으려면 아래와 같이 nonlocal keyword를 사용해주어야 함
+def closure_ex2_fix():
     # Free variable
     cnt = 0
     total = 0
@@ -613,43 +955,80 @@ def closure_ex3():
     
     return averager
 
-avg_closure3 = closure_ex3()
 
-print(avg_closure3(15))
-print(avg_closure3(35))
-print(avg_closure3(40))
+avg_closure3 = closure_ex2_fix()
 
-print()
-print()
 
-# nonlocal 좀 공부하기..하항
+>>> avg_closure3(15)
+15.0
+
+
+>>> avg_closure3(35)
+25.0
+
+
+>>> avg_closure3(40)
+30.0
+
+
+
+# Ex3
+# inner func는 상위 함수 외부에서 호출 불가!!
+def outer():
+    x = 100
+    
+    def inner():
+        x = 1000
+        return x
+    
+    return inner
+
+
+>>> outer()
+<function outer.<locals>.inner at 0x7fbc4d1994c0> 
+
+
+# 에러 발생
+# 내부 함수는 상위 함수(외부 함수) 밖에서 호출 불가능
+>>> inner()
+Traceback (most recent call last):
+  File "<input>", line 1, in <module>
+NameError: name 'inner' is not defined
 ```
+
+---
 
 # Chapter 05-04
 
-데코레이터
+## Decorator (데코레이터)
 
-- 클로저 → 데코레이터 관계
+- 함수를 인자로 받아 새로운 함수를 만들어 반환하는 함수
+- 외부함수가 내부함수를 return함
+- 장점
+  -  중복 제거, 코드 간결, 공통 함수 작성
+  - 로깅, 프레임워크, 유효성 체크 등 공통 기능에 활용 가능 
+  - 조합해서 사용 용이
+- 단점
+  - 가독성 감소
+  - 특정 기능에 한정된 함수는 단일 함수로 작성하는 것이 유리
+  - 디버깅 불편
 
 ```python
-# 파이썬 심화
-# 데코레이터
 
-# 장점
-# 1. 중복 제거, 코드 간결, 공통 함수 작성
-# 2. 로깅, 프레임워크, 유효성 체크..... -> 공통 기능 
-# 3. 조합해서 사용 용이
 
-# 단점
-# 1. 가독성 감소?
-# 2. 특정 기능에 한정된 함수는 -> 단일 함수로 작성하는 것이 유리
-# 3. 디버깅 불편
 
-# 데코레이터 실습
+```
+
+### Decorator 적용해보기
+
+```python
+
+# decorator 적용해보기
+
 import time
 
 # 매개변수로 function 받음
-# 자바의 annotation? 이랑 비슷하다고 함~
+
 def perf_clock(func):
     def perf_clocked(*args):
         # 함수 시작 시간 
@@ -707,3 +1086,18 @@ sum_func(100, 150, 250, 300, 350)
 print()
 
 ```
+
+
+--- 
+
+**Reference**
+
+[stack overflow : how-to-write-a-simple-callback-function](https://stackoverflow.com/questions/40843039/how-to-write-a-simple-callback-function/40843238)<br>
+[wikidocs - partial](https://wikidocs.net/13973)<br>
+[datacamp - python variable scope](https://www.datacamp.com/community/tutorials/scope-of-variables-python)<br>
+[wikidocs - legb rule](https://wikidocs.net/80519)<br>
+[nonlocal / closure](https://shoark7.github.io/programming/python/closure-in-python#2c)
+[co_freevars](https://stackoverflow.com/questions/32221063/where-does-python-store-the-name-binding-of-function-closure)<br>
+[co_cellvars](https://stackoverflow.com/questions/14413946/what-exactly-is-contained-within-a-obj-closure)<br>
+[cell_contents](http://schoolofweb.net/blog/posts/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%ED%81%B4%EB%A1%9C%EC%A0%80-closure/)<br>
+<br>
