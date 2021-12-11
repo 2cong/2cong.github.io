@@ -72,7 +72,6 @@ True
 >>> n.__mul__(100)
 1000
 ```
-<br>
 
 ## Magic Method 예제 1
 
@@ -236,6 +235,8 @@ True
 False
 ```
 
+---
+
 # Chapter 03-03
 
 ## NamedTuple
@@ -306,7 +307,6 @@ l_leng2 = sqrt((pt4[0] - pt3[0]) ** 2 + (pt4[1] - pt3[1]) ** 2)
 >>> l_leng2
 3.8078865529319543
 ```
-<br>
 
 ### NamedTuple 선언방법
 
@@ -382,7 +382,6 @@ Point(x=10, y=20, _2=30, _3=40)
 50
 ```
 
-<br>
 ### Unpacking
 
 ```python
@@ -416,7 +415,6 @@ x, y = p3
 20
 ```
 
-<br>
 ### Defaults값 지정
 
 ```python
@@ -441,7 +439,6 @@ p8 = point5(4,5)
 Point(x=4, y=5, z=3)
 ```
 
-<br>
 ### NamedTuple Method
 
 ```python
@@ -528,7 +525,6 @@ Person(name='Dana', age=10)
 
 ```
 
-<br>
 ### Immutable DataClass
 
 ```python
@@ -563,7 +559,6 @@ Traceback (most recent call last):
 dataclasses.FrozenInstanceError: cannot assign to field 'age'
 ```
 
-<br>
 ### NamedTuple
 
 ```python
