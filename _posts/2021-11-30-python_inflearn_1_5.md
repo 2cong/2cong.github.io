@@ -1012,22 +1012,167 @@ NameError: name 'inner' is not defined
   - 가독성 감소
   - 특정 기능에 한정된 함수는 단일 함수로 작성하는 것이 유리
   - 디버깅 불편
+  
+### Decorator 구조
 
 ```python
 
+# decorator 구조
+# 기능 추가할 function을 인자로 받음
+def decorator(func):
+    # 내부함수에서 기능 추가
+    def wrapper(*args, **kwargs):
+        print('decorator execution')
+        func(*args, **kwargs)
+    # 내부함수를 return 
+    return wrapper
 
 
+
+# decorator 사용
+@decorator
+def test_func_1(*args, **kwargs):
+    print('test_func_1 execution')
+    print(f'args : {args}')
+    print(f'kwargs: {kwargs}')
+    return None
+
+
+>>> test_func_1()
+decorator execution
+test_func_1 execution
+args : ()
+kwargs: {}
+
+
+>>> test_func_1(1, 2, a=1, b=3)
+decorator execution
+test_func_1 execution
+args : (1, 2)
+kwargs: {'a': 1, 'b': 3}
 ```
 
-### Decorator 적용해보기
+### Decorator 동작 이해하기
+
+decorator는 아래와 같은 동작 원리
 
 ```python
+def decorator(func):
+    # 내부함수에서 기능 추가
+    def wrapper(*args, **kwargs):
+        print('decorator execution')
+        func(*args, **kwargs)
+    # 내부함수를 return 
+    return wrapper
 
-# decorator 적용해보기
 
+def test_func_2(*args, **kwargs):
+    print('test_func_2 execution')
+    print(f'args : {args}')
+    print(f'kwargs: {kwargs}')
+    return None
+
+
+decorator_func = decorator(test_func_2)
+
+
+# decorator_func에 전달한 인자가 test_func_2로 전달됨
+>>> decorator_func()
+decorator execution
+test_func_2 execution
+args : ()
+kwargs: {}
+
+
+>>> decorator_func(1, 2, a=1, b=3)
+decorator execution
+test_func_2 execution
+args : (1, 2)
+kwargs: {'a': 1, 'b': 3}
+```
+
+### Parameter를 가지는 Decorator
+
+Decorator에 parameter를 전달하고 싶을 때는 parameter를 전달해주는 function으로 한번 더 wrapping 하면 됨
+
+```python
+# parameter를 전달해주는 function
+def parameter_decorator(params):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            print('parameter_decorator')
+            print(params)
+            print('decorator execution')
+            func(*args, **kwargs)
+        return wrapper
+    return decorator
+
+
+# decorator를 사용할 때는 parameter를 전달하는 함수 이름으로!
+@parameter_decorator('test_params')
+def test_func_3(*args, **kwargs):
+    print('test_func_3 execution')
+    print(f'args : {args}')
+    print(f'kwargs: {kwargs}')
+    return None
+
+
+>>> test_func_3()
+parameter_decorator
+test_params
+decorator execution
+test_func_3 execution
+args : ()
+kwargs: {}
+
+
+>>> test_func_3(1, 2, a=3)
+parameter_decorator
+test_params
+decorator execution
+test_func_3 execution
+args : (1, 2)
+kwargs: {'a': 3}
+
+
+
+
+# 위의 동작은 아래의 동작과 같음
+def test_func_4(*args, **kwargs):
+    print('test_func_4 execution')
+    print(f'args : {args}')
+    print(f'kwargs: {kwargs}')
+    return None
+
+
+params_decorator_func = parameter_decorator('test_params')
+
+decorator_func = params_decorator_func(test_func_4)
+
+
+>>> decorator_func()
+parameter_decorator
+test_params
+decorator execution
+test_func_4 execution
+args : ()
+kwargs: {}
+
+
+>>> decorator_func(1, 2, a=4)
+parameter_decorator
+test_params
+decorator execution
+test_func_4 execution
+args : (1, 2)
+kwargs: {'a': 4}
+```
+
+### Decorator 적용
+
+```python
 import time
 
-# 매개변수로 function 받음
 
 def perf_clock(func):
     def perf_clocked(*args):
@@ -1045,30 +1190,43 @@ def perf_clock(func):
         return result 
     return perf_clocked
 
+
+
+# ✅ 데코레이터 미사용
+
 def time_func(seconds):
     time.sleep(seconds)
 
+    
 def sum_func(*numbers):
     return sum(numbers)
 
-# 데코레이터 미사용
+
 none_deco1 = perf_clock(time_func)
 none_deco2 = perf_clock(sum_func)
 
-print(none_deco1, none_deco1.__code__.co_freevars)
-print(none_deco2, none_deco2.__code__.co_freevars)
 
-print('-' * 40, 'Called None Decorator -> time_func')
-print()
-none_deco1(1.5)
-print('-' * 40, 'Called None Decorator -> sum_func')
-print()
-none_deco2(100, 150, 250, 300, 350)
+# decorator를 통해 전달받는 인자도 자유변수!
+>>> none_deco1.__code__.co_freevars
+('func',)
 
-print()
-print()
 
-# 데코레이터 사용
+>>> none_deco2.__code__.co_freevars
+('func',)
+
+
+>>> none_deco1(1.5)
+[1.50056s] time_func(1.5) -> None
+
+
+>>> none_deco2(100, 150, 250, 300, 350)
+[0.00000s] sum_func(100, 150, 250, 300, 350) -> 1150
+1150
+
+
+
+# ✅ 데코레이터 사용
+
 @perf_clock
 def time_func(seconds):
     time.sleep(seconds)
@@ -1077,14 +1235,23 @@ def time_func(seconds):
 def sum_func(*numbers):
     return sum(numbers)
 
-print('*' * 40, 'Called Decorator -> time_func')
-print()
-time_func(1.5)
-print('*' * 40, 'Called Decorator -> sum_func')
-print()
-sum_func(100, 150, 250, 300, 350)
-print()
 
+# decorator를 통해 전달받는 인자도 자유변수!
+>>> time_func.__code__.co_freevars
+('func',)
+
+
+>>> sum_func.__code__.co_freevars
+('func',)
+
+
+>>> time_func(1.5)
+[1.50128s] time_func(1.5) -> None
+
+
+>>> sum_func(100, 150, 250, 300, 350)
+[0.00000s] sum_func(100, 150, 250, 300, 350) -> 1150
+1150
 ```
 
 
@@ -1100,4 +1267,5 @@ print()
 [co_freevars](https://stackoverflow.com/questions/32221063/where-does-python-store-the-name-binding-of-function-closure)<br>
 [co_cellvars](https://stackoverflow.com/questions/14413946/what-exactly-is-contained-within-a-obj-closure)<br>
 [cell_contents](http://schoolofweb.net/blog/posts/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%ED%81%B4%EB%A1%9C%EC%A0%80-closure/)<br>
+
 <br>
