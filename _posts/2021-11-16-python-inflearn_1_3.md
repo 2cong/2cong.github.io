@@ -606,5 +606,6 @@ AttributeError: can't set attribute
 
 [DataClass vs NamedTuple](http://www.legendu.net/misc/blog/dataclass-vs-namedtuple-in-python/) <br>
 [DataClass vs NamedTuple vs Object image](https://www.geeksforgeeks.org/difference-between-dataclass-vs-namedtuple-vs-object-in-python/)
+[Tuples in Python](https://www.scaler.com/topics/python/tuples-in-python/)
 
 <br>
