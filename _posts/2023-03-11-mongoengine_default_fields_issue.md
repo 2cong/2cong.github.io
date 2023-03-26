@@ -208,10 +208,13 @@ default 값을 변경 값으로 인식하지 않는 `_get_changed_fields()`, `_g
 #### 예시
 ```python
 def get_update_doc(document):
-    updates, _ = document._delta()  # 변경 값 구하기 (default가 아닌 변경 값들은 여기서 구해진다!) 
+    updates, removals = document._delta()  # 변경 값 구하기 (default가 아닌 변경 값들은 여기서 구해진다!) 
+    
     update_doc = {}
     if updates:
         update_doc["$set"] = updates
+    if removals:
+        update_doc["$unset"] = removals
     
     # default value가 있는 field name 구하기
     default_fields = [name for name, value in document._fields.items() if value.default is not None]
