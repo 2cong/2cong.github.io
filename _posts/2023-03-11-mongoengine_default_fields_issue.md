@@ -1,7 +1,7 @@
 ---
 layout: article
 title: mongoengine default field와 update
-tags: mongodb mongoengine
+tags: mongoengine
 aside:
   toc: true
 ---
@@ -16,10 +16,12 @@ default 값이 정의되어 있는 field에 default value와 같은 값을 넣�
 ### 참고 사항 
 #### DB migration 작업 방향
 현재 진행하고 있는 DB migration 작업은 크게 두가지 종류로 나뉜다.
+<br>
 1. 존재하는 collection에 새로운 내용 추가하기 (DB collection 병합)
 <img width="545" alt="image" src="https://user-images.githubusercontent.com/60612551/224525778-0f0e8f1f-1e49-4d7c-bba2-11f4d8bd4698.png">
+    
+    <br>
 
-<br>
 2. 새로운 collection 생성하기 (다른 DB로 collection 이동)
 <img width="545" alt="image" src="https://user-images.githubusercontent.com/60612551/224525838-ffbdd749-a599-4909-a2f2-82dd9441a638.png">
 
@@ -232,3 +234,5 @@ def get_update_doc(document):
 EmbeddedDocumentField인 경우는 EmbeddedDocument로 저장되어 있기 때문에 변경해주지 않고 update_doc에 바로 넣게 되면 update하는 과정에서 `bson.errors.InvalidDocument: cannot encode object` 에러를 반환하게 된다.
 
 **한계점** : 누락되지 않고 실제 DB에 값이 들어있는 field인 경우도 업데이트 된다..ㅠ 이 경우는 결국 같은 값에서 같은 값으로 update하게 됨..🥹 (field에 default가 정의되어 있는 field는 무조건 업데이트 🤦‍♀️🤦‍♀️🤦‍♀️) 
+
+<br>
