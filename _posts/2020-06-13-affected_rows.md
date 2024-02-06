@@ -1,7 +1,7 @@
 ---
 layout: article
 title: Affected Rows 
-tags: mysql
+tags: MySQL
 aside:
   toc: true
 ---
