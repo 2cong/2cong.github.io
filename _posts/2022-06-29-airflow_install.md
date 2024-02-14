@@ -93,7 +93,7 @@ helm install <Release_name> <Chart_name> --namespace <namespace>
 
 - 위의 명령어를 실행하면 아래와 같이 airflow Pod가 생성된다!
 
-<img width="541" alt="image" src="https://github.com/2cong/2cong/assets/60612551/b7693569-e6a5-4245-9611-8783b4959520">
+<img width="596" alt="image" src="https://github.com/2cong/2cong/assets/60612551/2a08a318-692c-480a-aea7-0c39512c47cd">
 
 
 <br>
