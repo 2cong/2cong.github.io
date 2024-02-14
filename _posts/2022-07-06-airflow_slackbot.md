@@ -16,11 +16,10 @@ aside:
 ## Airflow 서버 세팅하기
 
 - [Airflow 설치하기](https://2cong.github.io/2022/06/29/airflow_install.html)
-- [Airflow Web | Ingress 설정하기](https://2cong.github.io/2022/06/30/airflow_web_1.html)
-- [Airflow Web | Google OAuth 설정하기](https://2cong.github.io/2022/06/30/airflow_web_2.html)
-- Airflow Logs 관리하기
+- [Airflow Web : Ingress 설정하기](https://2cong.github.io/2022/06/30/airflow_web_1.html)
+- [Airflow Web : Google OAuth 설정하기](https://2cong.github.io/2022/06/30/airflow_web_2.html)
+- [Airflow Logs 관리하기](https://2cong.github.io/2022/07/03/airflow-logs.html)
 - Airflow Pod Mount 하기
-- Airflow Pod Disk 연결
 
 
 ## Slack bot 만들고 Airflow 연결하기
